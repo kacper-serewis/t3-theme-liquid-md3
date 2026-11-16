@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liquid MD3 preview</title>
+<!--
+  A mockup of T3 Code with the Liquid MD3 theme, used for the README images.
+  Colors are copied from ../theme/liquid-md3.json; update them here when the theme changes.
+-->
+<style>
+  * { box-sizing: border-box; }
+  html { margin: 0; padding: 0; }
+  body { margin: 0; padding: 24px; background: #8a8a86; font: 13px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; display: grid; gap: 24px; justify-content: center; }
+
+  .win {
+    --bg: url(../theme/liquid-md3.webp); --base: #f1ead6;
+    --veil: rgb(252 251 247 / .42); --side: rgb(252 251 247 / .16);
+    --tint: 255 248 242; --a: .10; --a2: .07;
+    --rim: rgb(255 255 255 / .85); --rim2: rgb(255 255 255 / .18); --edge: rgb(255 255 255 / .55); --drop: rgb(55 47 34 / .18);
+    --icon: rgb(40 36 30 / .78);
+    --text: #1F1B14; --muted: #4E4637; --placeholder: #807665; --border: #D1C5B1;
+    --accent: #465D91; --on-accent: #FFFFFF; --accent-rgb: 70 93 145;
+    --tonal: #F1E0C5; --on-tonal: #504531;
+    --panel: #FFFCF7; --error: #C4001A; --add: #2E7D32;
+    width: 1280px; height: 720px; border-radius: 12px; overflow: hidden; position: relative; color: var(--text);
+    background: linear-gradient(var(--veil), var(--veil)), var(--bg) 50% 42% / 108% auto no-repeat, var(--base);
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / .45), 0 0 0 1px rgb(0 0 0 / .15);
+    display: grid; grid-template-columns: 256px 1fr;
+  }
+  .win.dark {
+    --bg: url(../theme/zonsopgang-monet.avif); --base: #373a37;
+    --veil: rgb(24 26 26 / .5); --side: rgb(20 22 22 / .2);
+    --tint: 29 32 30; --a: .16; --a2: .06;
+    --rim: rgb(255 255 255 / .3); --rim2: rgb(255 255 255 / .06); --edge: rgb(255 255 255 / .2); --drop: rgb(0 0 0 / .35);
+    --icon: rgb(240 236 228 / .82);
+    --text: #E1E3DE; --muted: #C0C9C0; --placeholder: #8A938B; --border: #404942;
+    --accent: #92D5AB; --on-accent: #003920; --accent-rgb: 146 213 171;
+    --tonal: #374B3E; --on-tonal: #D1E8D6;
+    --panel: #282B28; --error: #FF6961; --add: #7BD88F;
+  }
+
+  .glass {
+    background: radial-gradient(120% 80% at 15% 0%, rgb(255 255 255 / calc(var(--a2) * 1.6)), transparent 55%),
+                linear-gradient(160deg, rgb(var(--tint) / calc(var(--a) + var(--a2))), rgb(var(--tint) / var(--a)));
+    backdrop-filter: blur(4px) saturate(1.9) brightness(1.06);
+    border: 1px solid var(--edge);
+    box-shadow: inset 0 1px 0 var(--rim), inset 0 -1px 0 var(--rim2), 0 10px 30px -12px var(--drop);
+  }
+  svg { width: 16px; height: 16px; fill: none; stroke: var(--icon); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  /* Sidebar */
+  .side { background: var(--side); border-right: 1px solid var(--edge); display: flex; flex-direction: column; padding: 12px 10px; gap: 2px; }
+  .traffic { display: flex; align-items: center; gap: 8px; height: 22px; padding-left: 4px; margin-bottom: 14px; }
+  .traffic i { width: 12px; height: 12px; border-radius: 50%; }
+  .traffic b { margin-left: 14px; font-weight: 600; }
+  .search { display: flex; align-items: center; gap: 8px; padding: 6px 8px; color: var(--muted); }
+  .search span { flex: 1; }
+  .group { font-size: 11px; font-weight: 600; color: var(--muted); padding: 14px 8px 4px; display: flex; align-items: center; gap: 6px; }
+  .mono { width: 16px; height: 16px; background: var(--accent); color: var(--on-accent); font-size: 8px; font-weight: 700; display: grid; place-items: center; clip-path: var(--cookie); }
+  .row { padding: 7px 10px; border-radius: 12px; display: grid; gap: 1px; }
+  .row small { color: var(--muted); font-size: 11px; display: flex; gap: 6px; align-items: center; }
+  .row.active { background: var(--tonal); color: var(--on-tonal); }
+  .row.active small { color: var(--on-tonal); opacity: .8; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .spacer { flex: 1; }
+  .bucket { display: flex; justify-content: space-between; padding: 6px 10px; font-size: 12px; color: var(--muted); }
+  .foot { display: flex; gap: 16px; padding: 10px 8px 0; }
+
+  /* Main */
+  .main { position: relative; display: flex; flex-direction: column; min-width: 0; }
+  .head { height: 46px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-bottom: 1px solid var(--edge); }
+  .head .crumb { color: var(--muted); }
+  .head .tools { margin-left: auto; display: flex; gap: 14px; }
+  .head .tools .on { background: var(--tonal); border-radius: 8px; padding: 4px; margin: -4px; }
+  .head .tools .on svg { stroke: var(--on-tonal); }
+  .chat { flex: 1; width: 600px; margin: 0 0 0 96px; padding: 22px 0; display: flex; flex-direction: column; gap: 14px; }
+  .bubble { align-self: flex-end; max-width: 420px; background: rgb(from var(--tonal) r g b / .94); color: var(--on-tonal); padding: 9px 14px; border-radius: 20px 20px 6px 20px; box-shadow: 0 1px 2px rgb(0 0 0 / .06), 0 8px 22px -14px var(--drop); }
+  .worked { color: var(--muted); font-size: 12px; }
+  .chat p { margin: 0; }
+  .chat a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  code { font: 12px ui-monospace, "SF Mono", Menlo, monospace; background: rgb(var(--tint) / .55); border: 1px solid var(--edge); padding: 1px 5px; border-radius: 6px; }
+  .files { background: rgb(from var(--tonal) r g b / .94); color: var(--on-tonal); border-radius: 16px; padding: 10px 14px; display: grid; gap: 8px; font-size: 12px; }
+  .files header { display: flex; gap: 8px; font-weight: 600; }
+  .files header span:last-child { margin-left: auto; opacity: .85; }
+  .files div { display: flex; gap: 8px; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .files div span:first-child { flex: 1; }
+  .add { color: var(--add); } .del { color: var(--error); }
+  .progress { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+  .progress svg { width: 120px; height: 10px; stroke: var(--accent); stroke-width: 3; }
+  .progress svg .rest { stroke: rgb(var(--accent-rgb) / .25); }
+
+  /* Composer */
+  .composer { width: 600px; margin: 0 0 22px 96px; border-radius: 26px; padding: 14px 14px 10px 18px; display: grid; gap: 14px; --a: calc(.10 + .16); }
+  .win.dark .composer { --a: calc(.16 + .16); }
+  .composer .ph { color: var(--placeholder); }
+  .composer .bar { display: flex; align-items: center; gap: 14px; }
+  .attach { width: 32px; height: 32px; border-radius: 50%; background: rgb(from var(--tonal) r g b / .6); display: grid; place-items: center; margin-left: -6px; }
+  .attach svg { stroke: var(--on-tonal); }
+  .model { margin-left: auto; font-weight: 500; }
+  .send { width: 38px; height: 38px; background: var(--accent); clip-path: var(--cookie); display: grid; place-items: center; }
+  .send svg { stroke: var(--on-accent); stroke-width: 2.4; }
+
+  /* Popover */
+  .pop { position: absolute; right: 16px; top: 54px; width: 230px; border-radius: 18px; padding: 8px; background: var(--panel); border: 1px solid var(--border); box-shadow: 0 18px 40px -16px var(--drop); display: grid; gap: 2px; font-size: 12px; }
+  .pop .item { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 10px; }
+  .pop .item.hl { background: var(--tonal); color: var(--on-tonal); }
+  .pop .item.hl svg { stroke: var(--on-tonal); }
+  .pop .item .tag { margin-left: auto; background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: 1px 9px; font-weight: 600; font-size: 11px; }
+  .pop hr { border: 0; border-top: 1px solid var(--border); margin: 4px 0; width: 100%; }
+  .meter { display: grid; grid-template-columns: 1fr 90px 34px; align-items: center; gap: 8px; padding: 3px 8px; color: var(--muted); }
+  .meter svg { width: 90px; height: 8px; stroke: var(--accent); stroke-width: 2.5; }
+  .meter svg .rest { stroke: rgb(var(--accent-rgb) / .25); }
+  .meter b { text-align: right; color: var(--text); font-weight: 500; }
+
+  :root { --cookie: polygon(50.0% 0.0%,54.3% 1.4%,58.0% 4.7%,61.2% 8.3%,64.4% 10.5%,68.2% 10.9%,73.0% 10.2%,78.0% 10.0%,82.1% 11.7%,84.5% 15.5%,85.2% 20.4%,85.4% 25.2%,86.4% 29.0%,89.1% 31.8%,93.2% 34.3%,97.2% 37.4%,99.2% 41.3%,98.6% 45.7%,96.0% 50.0%,93.0% 53.8%,91.4% 57.3%,91.7% 61.2%,93.2% 65.7%,94.3% 70.6%,93.3% 75.0%,90.0% 78.0%,85.2% 79.6%,80.5% 80.5%,77.0% 82.2%,74.8% 85.4%,73.0% 89.8%,70.6% 94.3%,67.1% 97.0%,62.6% 97.2%,58.0% 95.3%,53.8% 93.0%,50.0% 92.0%,46.2% 93.0%,42.0% 95.3%,37.4% 97.2%,32.9% 97.0%,29.4% 94.3%,27.0% 89.8%,25.2% 85.4%,23.0% 82.2%,19.5% 80.5%,14.8% 79.6%,10.0% 78.0%,6.7% 75.0%,5.7% 70.6%,6.8% 65.7%,8.3% 61.2%,8.6% 57.3%,7.0% 53.8%,4.0% 50.0%,1.4% 45.7%,0.8% 41.3%,2.8% 37.4%,6.8% 34.3%,10.9% 31.8%,13.6% 29.0%,14.6% 25.2%,14.8% 20.4%,15.5% 15.5%,17.9% 11.7%,22.0% 10.0%,27.0% 10.2%,31.8% 10.9%,35.6% 10.5%,38.8% 8.3%,42.0% 4.7%,45.7% 1.4%); }
+</style>
+</head>
+<body>
+
+<template id="ui">
+  <aside class="side glass">
+    <div class="traffic"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><b>T3 Code</b></div>
+    <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search</span><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+    <div class="group"><span class="mono">LM</span>liquid-md3</div>
+    <div class="row active"><span>Warmer accent colors</span><small><span class="dot"></span>fix/theme-accent-colors</small></div>
+    <div class="row"><span>Wavy progress bars</span><small>2h ago</small></div>
+    <div class="row"><span>Glass sidebar</span><small>yesterday</small></div>
+    <div class="group"><span class="mono">MA</span>marketing-site</div>
+    <div class="row"><span>Pricing page copy</span><small>3d ago</small></div>
+    <div class="row"><span>Fix footer links</span><small>last week</small></div>
+    <div class="spacer"></div>
+    <div class="bucket"><span>Snoozed</span><span>4 ›</span></div>
+    <div class="bucket"><span>Settled</span><span>128 ›</span></div>
+    <div class="foot"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></div>
+  </aside>
+  <main class="main">
+    <div class="head"><span class="crumb">liquid-md3 /</span><b>Warmer accent colors</b>
+      <div class="tools"><span class="on"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 15h16"/></svg><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M15 4v16"/></svg></div>
+    </div>
+    <div class="chat">
+      <div class="bubble">The teal accent doesn't sit well on the painting. Can we find warmer colors?</div>
+      <div class="worked">Worked for 41s ›</div>
+      <p>I derived new palettes from the background paintings and applied them to both modes. See <a>liquid-md3.json</a> and the PR on <code>fix/theme-accent-colors</code>.</p>
+      <div class="files"><header><span>2 changed files</span><span class="add">+48</span><span class="del">−46</span><span>Open diff</span></header>
+        <div><span>theme/liquid-md3.json</span><span class="add">+46</span><span class="del">−44</span></div>
+        <div><span>README.md</span><span class="add">+2</span><span class="del">−2</span></div>
+      </div>
+      <div class="bubble">Looks good, open a PR.</div>
+      <div class="progress"><svg viewBox="0 0 120 10" preserveAspectRatio="none"><path d="M2 5 q4 -4 8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0"/><path class="rest" d="M74 5 H118"/></svg>Opening pull request…</div>
+    </div>
+    <div class="composer glass">
+      <span class="ph">Ask anything. @ files, $ skills, / commands</span>
+      <div class="bar"><span class="attach"><svg viewBox="0 0 24 24"><path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.3 3.3 0 0 1 4.7 4.7L10 17.4a1.7 1.7 0 0 1-2.4-2.4L15.5 7"/></svg></span>
+        <span class="model">Opus 5.5 · Medium</span><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        <span class="send"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></div>
+    </div>
+    <div class="pop">
+      <div class="item"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 5.5"/></svg>fix/theme-accent-colors</div>
+      <div class="item hl"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5V21M18 15.5V9a3 3 0 0 0-3-3h-4"/></svg>PR #1<span class="tag">Merge</span></div>
+      <hr>
+      <div class="meter"><span>Session</span><svg viewBox="0 0 90 8" preserveAspectRatio="none"><path d="M2 4 q3 -3 6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0"/><path class="rest" d="M58 4 H88"/></svg><b>64%</b></div>
+      <div class="meter"><span>Weekly</span><svg viewBox="0 0 90 8" preserveAspectRatio="none"><path d="M2 4 q3 -3 6 0 t6 0"/><path class="rest" d="M16 4 H88"/></svg><b>12%</b></div>
+    </div>
+  </main>
+</template>
+
+<div class="win" id="light"></div>
+<div class="win dark" id="dark"></div>
+
+<script>
+  const ui = document.getElementById('ui');
+  for (const w of document.querySelectorAll('.win')) w.append(ui.content.cloneNode(true));
+  const only = new URLSearchParams(location.search).get('mode') || document.documentElement.dataset.mode;
+  if (only) document.querySelectorAll('.win').forEach(w => { if (w.id !== only) w.remove(); });
+</script>
+</body>
+</html>

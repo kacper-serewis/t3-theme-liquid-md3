@@ -10,7 +10,7 @@ A dark and light theme for [T3 Code](https://t3.codes): a painting as the backgr
 
 ![Liquid MD3 in light mode](screenshots/light.png)
 
-Private text in the screenshots is blurred.
+These images are mockups of T3 Code with the theme applied. They are made from [`preview/mockup.html`](preview/mockup.html); open that file in a browser to see both modes.
 
 ## Install
 
