@@ -2,7 +2,13 @@
 
 Een donker en licht thema voor [T3 Code](https://t3.codes): een schilderij als achtergrond, glasachtige panelen (liquid glass) en vormen in de stijl van Material Design 3 (afgeronde knoppen, een "cookie"-verzendknop, golvende voortgangsbalken).
 
-![T3 Code met het thema Liquid MD3](screenshots/overzicht.png)
+**Donker**
+
+![Liquid MD3 in donkere modus](screenshots/overzicht-donker.png)
+
+**Licht**
+
+![Liquid MD3 in lichte modus](screenshots/overzicht-licht.png)
 
 Privétekst in de schermafbeeldingen is vervaagd.
 
